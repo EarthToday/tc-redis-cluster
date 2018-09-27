@@ -7,7 +7,7 @@
 # http://www.opensource.org/licenses/mit-license
 # Copyright (c) 2011 globo.com timehome@corp.globo.com
 
-import redis
+import rediscluster
 from pyvows import Vows, expect
 
 from tc_redis.storages.redis_storage import Storage as RedisStorage
@@ -18,10 +18,9 @@ from fixtures.storage_fixtures import IMAGE_URL, IMAGE_BYTES, get_server
 
 class RedisDBContext(Vows.Context):
     def setup(self):
-        self.connection = redis.Redis(
+        self.connection = rediscluster.StrictRedisCluster(
             port=6379,
-            host='localhost',
-            db=0
+            host='localhost'
         )
 
 
@@ -30,7 +29,6 @@ class RedisStorageVows(RedisDBContext):
     class CanStoreImage(Vows.Context):
         def topic(self):
             config = Config(
-                REDIS_STORAGE_SERVER_PORT=6379,
             )
             storage = RedisStorage(Context(
                 config=config, server=get_server('ACME-SEC')
@@ -45,7 +43,6 @@ class RedisStorageVows(RedisDBContext):
     class KnowsImageExists(Vows.Context):
         def topic(self):
             config = Config(
-                REDIS_STORAGE_SERVER_PORT=6379,
             )
             storage = RedisStorage(Context(
                 config=config, server=get_server('ACME-SEC')
@@ -60,7 +57,6 @@ class RedisStorageVows(RedisDBContext):
     class KnowsImageDoesNotExist(Vows.Context):
         def topic(self):
             config = Config(
-                REDIS_STORAGE_SERVER_PORT=6379,
             )
             storage = RedisStorage(Context(
                 config=config, server=get_server('ACME-SEC')
@@ -74,7 +70,6 @@ class RedisStorageVows(RedisDBContext):
     class CanRemoveImage(Vows.Context):
         def topic(self):
             config = Config(
-                REDIS_STORAGE_SERVER_PORT=6379,
             )
             storage = RedisStorage(Context(
                 config=config, server=get_server('ACME-SEC')
@@ -90,7 +85,6 @@ class RedisStorageVows(RedisDBContext):
         class CanReRemoveImage(Vows.Context):
             def topic(self):
                 config = Config(
-                    REDIS_STORAGE_SERVER_PORT=6379,
                 )
                 storage = RedisStorage(Context(
                     config=config, server=get_server('ACME-SEC')
@@ -104,7 +98,6 @@ class RedisStorageVows(RedisDBContext):
     class CanGetImage(Vows.Context):
         def topic(self):
             config = Config(
-                REDIS_STORAGE_SERVER_PORT=6379,
             )
             storage = RedisStorage(Context(
                 config=config, server=get_server('ACME-SEC')
@@ -125,7 +118,6 @@ class RedisStorageVows(RedisDBContext):
             @Vows.capture_error
             def topic(self):
                 config = Config(
-                    REDIS_STORAGE_SERVER_PORT=300,
                     REDIS_STORAGE_SERVER_PASSWORD='nope',
                     REDIS_STORAGE_IGNORE_ERRORS=False
                 )
@@ -147,7 +139,6 @@ class RedisStorageVows(RedisDBContext):
         class IgnoreErrors(Vows.Context):
             def topic(self):
                 config = Config(
-                    REDIS_STORAGE_SERVER_PORT=300,
                     REDIS_STORAGE_SERVER_PASSWORD='nope',
                     REDIS_STORAGE_IGNORE_ERRORS=True
                 )
@@ -177,7 +168,6 @@ class RedisStorageVows(RedisDBContext):
             @Vows.capture_error
             def topic(self):
                 config = Config(
-                    REDIS_STORAGE_SERVER_PORT=6379,
                     STORES_CRYPTO_KEY_FOR_EACH_IMAGE=True
                 )
                 storage = RedisStorage(Context(
@@ -196,7 +186,6 @@ class RedisStorageVows(RedisDBContext):
         class GettingCryptoForANewImageReturnsNone(Vows.Context):
             def topic(self):
                 config = Config(
-                    REDIS_STORAGE_SERVER_PORT=6379,
                     STORES_CRYPTO_KEY_FOR_EACH_IMAGE=True
                 )
                 storage = RedisStorage(Context(
@@ -210,7 +199,6 @@ class RedisStorageVows(RedisDBContext):
         class DoesNotStoreIfConfigSaysNotTo(Vows.Context):
             def topic(self):
                 config = Config(
-                    REDIS_STORAGE_SERVER_PORT=6379,
                 )
                 storage = RedisStorage(Context(
                     config=config, server=get_server('ACME-SEC')
@@ -225,7 +213,6 @@ class RedisStorageVows(RedisDBContext):
         class CanStoreCrypto(Vows.Context):
             def topic(self):
                 config = Config(
-                    REDIS_STORAGE_SERVER_PORT=6379,
                     STORES_CRYPTO_KEY_FOR_EACH_IMAGE=True
                 )
                 storage = RedisStorage(Context(
@@ -247,7 +234,6 @@ class RedisStorageVows(RedisDBContext):
         class CanStoreDetectorData(Vows.Context):
             def topic(self):
                 config = Config(
-                    REDIS_STORAGE_SERVER_PORT=6379,
                 )
                 storage = RedisStorage(Context(
                     config=config, server=get_server('ACME-SEC')
@@ -266,7 +252,6 @@ class RedisStorageVows(RedisDBContext):
         class ReturnsNoneIfNoDetectorData(Vows.Context):
             def topic(self):
                 config = Config(
-                    REDIS_STORAGE_SERVER_PORT=6379,
                 )
                 storage = RedisStorage(Context(
                     config=config, server=get_server('ACME-SEC')

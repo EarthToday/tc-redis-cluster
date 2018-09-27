@@ -2,7 +2,7 @@
 
 import json
 from datetime import datetime, timedelta
-from redis import Redis, RedisError
+from rediscluster import StrictRedisCluster, RedisError
 from tc_redis.utils import on_exception
 from tornado.concurrent import return_future
 from thumbor.storages import BaseStorage
@@ -41,11 +41,10 @@ class Storage(BaseStorage):
         if self.shared_client and Storage.storage:
             return Storage.storage
 
-        storage = Redis(
-            port=self.context.config.REDIS_STORAGE_SERVER_PORT,
-            host=self.context.config.REDIS_STORAGE_SERVER_HOST,
-            db=self.context.config.REDIS_STORAGE_SERVER_DB,
-            password=self.context.config.REDIS_STORAGE_SERVER_PASSWORD
+        storage = StrictRedisCluster(
+            startup_nodes=map(lambda x: { "host": x.split(':')[0], "port": x.split(':')[1] if len(x.split(':')) > 1 else "6379" }, [ x.strip() for x in self.context.config.REDIS_STORAGE_STARTUP_NODES.split(',') ]),
+            password=self.context.config.REDIS_STORAGE_SERVER_PASSWORD,
+            decode_response=sys.version_info[0] >= 3
         )
 
         if self.shared_client:

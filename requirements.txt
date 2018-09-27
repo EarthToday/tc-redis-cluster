@@ -1,2 +1,2 @@
-redis
-thumbor>=5.0.0
+redis-py-cluster>=1.3.5
+git+https://github.com/dffrntmedia/thumbor.git

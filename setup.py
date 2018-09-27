@@ -28,7 +28,7 @@ setup(
         'Programming Language :: Python :: 2.7',
     ],
     install_requires=[
-        'thumbor>=5.0.0',
-        'redis'
+        'git+https://github.com/dffrntmedia/thumbor.git',
+        'redis-py-cluster>=1.3.5'
     ]
 )

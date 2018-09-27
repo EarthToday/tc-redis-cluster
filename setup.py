@@ -32,6 +32,6 @@ setup(
         'redis-py-cluster>=1.3.5'
     ],
     dependency_links=[
-      'git+https://github.com/dffrntmedia/thumbor.git#egg=dffrntmedia-thumbor
+      'git+https://github.com/dffrntmedia/thumbor.git#egg=dffrntmedia-thumbor'
     ]
 )

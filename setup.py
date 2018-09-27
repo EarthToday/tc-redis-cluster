@@ -28,10 +28,10 @@ setup(
         'Programming Language :: Python :: 2.7',
     ],
     install_requires=[
-        'dffrntmedia-thumbor',
+        'dffrntmedia-thumbor==1.0.0',
         'redis-py-cluster>=1.3.5'
     ],
     dependency_links=[
-      'git+https://github.com/dffrntmedia/thumbor.git@master#egg=dffrntmedia-thumbor-0'
+      'git+https://github.com/dffrntmedia/thumbor.git@master#egg=dffrntmedia-thumbor-1.0.0'
     ]
 )

@@ -43,7 +43,7 @@ class Storage(BaseStorage):
             return Storage.storage
 
         storage = StrictRedisCluster(
-            startup_nodes=map(lambda x: { "host": x.split(':')[0], "port": x.split(':')[1] if len(x.split(':')) > 1 else "6379" }, [ x.strip() for x in self.context.config.REDIS_STORAGE_STARTUP_NODES.split(',') ]),
+            startup_nodes=map(lambda x: { "host": x.split(':')[0], "port": x.split(':')[1] if len(x.split(':')) > 1 else "6379" }, [ x.strip() for x in self.context.config.REDIS_STORAGE_SERVER_STARTUP_NODES.split(',') ]),
             password=self.context.config.REDIS_STORAGE_SERVER_PASSWORD,
             decode_response=sys.version_info[0] >= 3
         )

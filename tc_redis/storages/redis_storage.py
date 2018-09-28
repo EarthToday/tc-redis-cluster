@@ -2,7 +2,8 @@
 
 import json
 from datetime import datetime, timedelta
-from rediscluster import StrictRedisCluster, RedisError
+from rediscluster import StrictRedisCluster
+from redis.exceptions import RedisError
 from tc_redis.utils import on_exception
 from tornado.concurrent import return_future
 from thumbor.storages import BaseStorage

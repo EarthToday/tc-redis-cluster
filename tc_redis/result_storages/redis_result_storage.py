@@ -7,7 +7,7 @@
 import time
 import sys
 from datetime import datetime, timedelta
-from rediscluster import StrictRedisCluster, RedisError
+from rediscluster import StrictRedisCluster, ClusterError
 from tc_redis.utils import on_exception
 from thumbor.result_storages import BaseStorage
 from thumbor.utils import logger
@@ -130,7 +130,7 @@ class Storage(BaseStorage):
 
         return default_ttl
 
-    @on_exception(on_redis_error, RedisError)
+    @on_exception(on_redis_error, ClusterError)
     def put(self, bytes):
         '''Save to redis
 
@@ -162,7 +162,7 @@ class Storage(BaseStorage):
 
         return key
 
-    @on_exception(on_redis_error, RedisError)
+    @on_exception(on_redis_error, ClusterError)
     def get(self):
         '''Get the item from redis.'''
 
@@ -171,7 +171,7 @@ class Storage(BaseStorage):
 
         return result if result else None
 
-    @on_exception(on_redis_error, RedisError)
+    @on_exception(on_redis_error, ClusterError)
     def last_updated(self):
         '''Return the last_updated time of the current request item
 

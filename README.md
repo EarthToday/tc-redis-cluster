@@ -35,4 +35,13 @@ REDIS_RESULT_STORAGE_SERVER_PASSWORD = None
 
 ## Where it is
 
-https://pypi.org/project/dffrntlab-tc-redis/
+https://pypi.org/project/dffrntlab-tc-redis/## Push to PyPi
+
+```
+python setup.py sdist bdist_wheel
+# install twine if you don't have
+# pip install twine
+twine upload dist/*
+```
+
+Now we use this profile to push packages: https://pypi.org/user/maximka777/ _(need to register dffrntlab one)_.

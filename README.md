@@ -30,3 +30,9 @@ REDIS_RESULT_STORAGE_IGNORE_ERRORS = True
 REDIS_RESULT_STORAGE_SERVER_STARTUP_NODES = 'localhost:7001,localhost:7002'
 REDIS_RESULT_STORAGE_SERVER_PASSWORD = None
 ```
+
+# dffrntlab part
+
+## Where it is
+
+https://pypi.org/project/dffrntlab-tc-redis/
